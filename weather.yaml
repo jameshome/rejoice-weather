@@ -1,0 +1,48 @@
+# weather — simple weather station sensor
+
+# SETUP
+esphome:
+  name: weather
+  platform: ESP8266
+  board: !secret board
+wifi:
+  ssid: !secret wifi-ssid
+  password: !secret wifi-pass
+  manual_ip:
+    static_ip: !secret wifi-ip
+    gateway: !secret wifi-gw
+    subnet: !secret wifi-mask
+  fast_connect: true
+web_server:
+  port: 80
+api:
+  reboot_timeout: 0s
+logger:
+ota:
+prometheus:
+i2c:
+  # D2
+  sda: GPIO4
+  # D1
+  scl: GPIO5
+  scan: True
+  id: bus_a
+dallas:
+  # D5
+  - pin: GPIO14
+
+#LOGIC
+sensor:
+  - platform: bme280
+    temperature:
+      name: "Deck Temperature"
+      oversampling: 16x
+    pressure:
+      name: "Pressure"
+    humidity:
+      name: "Humidity"
+    address: 0x77
+    update_interval: 60s
+  - platform: dallas
+    address: 0x213CFFB5566F0728
+    name: "Cabin Temperature"

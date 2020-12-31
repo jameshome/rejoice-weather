@@ -1,0 +1,11 @@
+# start by ignoring everything
+*
+
+# don't ignore files/folders preceeded by !
+!*.yaml
+!.gitignore
+!*.md
+!aliases
+
+# double tap hide your secrets
+secrets.yaml
